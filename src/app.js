@@ -11,6 +11,8 @@ let provinceAndCityData = []
 
 CodeToText[''] = '全部'
 
+const zhixiashi = ['北京市', '天津市', '重庆市', '上海市']
+
 // 计算省
 for (const prop in provinceObject) {
   regionData.push({
@@ -39,6 +41,11 @@ for (let i = 0, len = regionData.length; i < len; i++) {
     TextToCode[provinceText][REGION_DATA[provinceCode][prop]] = {
       code: prop
     }
+    // if (zhixiashi.includes(provinceText)) {
+    //   TextToCode[provinceText][cityText][REGION_DATA[cityCode][prop]] = {
+    //     code: prop
+    //   }
+    // }
     TextToCode[provinceText][REGION_DATA[provinceCode][prop]]['全部'] = {
       code: ''
     }
@@ -64,8 +71,16 @@ for (let i = 0, len = regionData.length; i < len; i++) {
           label: REGION_DATA[cityCode][prop]
         })
         CodeToText[prop] = REGION_DATA[cityCode][prop]
-        TextToCode[provinceText][cityText][REGION_DATA[cityCode][prop]] = {
-          code: prop
+        
+
+        if (zhixiashi.includes(provinceText)) {
+          TextToCode[provinceText]['直辖市'][REGION_DATA[cityCode][prop]] = {
+            code: prop
+          }
+        } else {
+          TextToCode[provinceText][cityText][REGION_DATA[cityCode][prop]] = {
+            code: prop
+          }
         }
       }
       if (cityChildren.length) {
